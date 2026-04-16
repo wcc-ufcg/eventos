@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WCC — Win Code Competitive</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --green:  #3DC47E;
+    --purple: #7B61FF;
+    --blue:   #1A8FFF;
+    --beige:  #F5EFE6;
+    --dark:   #111111;
+    --white:  #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--beige);
+    color: var(--dark);
+    /* A4 width feel at screen */
+    max-width: 794px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+
+  /* ── STAR SVG ── */
+  .star {
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  /* ══════════════════════════════
+     HERO
+  ══════════════════════════════ */
+  .hero {
+    background: var(--green);
+    padding: 56px 48px 48px;
+    position: relative;
+    overflow: hidden;
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    background: rgba(0,0,0,0.08);
+    clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    animation: spinStar 18s linear infinite;
+  }
+
+  @keyframes spinStar {
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+  }
+
+  .hero-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .hero-logo .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .logo-win {
+    font-size: 42px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: var(--dark);
+  }
+
+  .logo-win strong {
+    font-weight: 800;
+  }
+
+  .logo-comp {
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -1px;
+  }
+
+  .hero-tagline {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: rgba(0,0,0,0.6);
+    margin-top: 6px;
+  }
+
+  .hero-handle {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: rgba(0,0,0,0.4);
+    position: absolute;
+    bottom: 22px;
+    right: 48px;
+  }
+
+  /* ══════════════════════════════
+     SECTION LABEL
+  ══════════════════════════════ */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.35);
+    padding: 28px 48px 0;
+  }
+
+  /* ══════════════════════════════
+     PRÓXIMOS EVENTOS — TITLE STRIP
+  ══════════════════════════════ */
+  .events-title-strip {
+    padding: 14px 48px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .events-title-strip h2 {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  /* ══════════════════════════════
+     EVENT CARDS
+  ══════════════════════════════ */
+  .events-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 48px;
+  }
+
+  .event-card {
+    border-radius: 18px;
+    padding: 28px 32px;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 16px;
+    cursor: default;
+    transition: transform 0.25s cubic-bezier(.22,.68,0,1.2);
+  }
+
+  .event-card:hover {
+    transform: scale(1.012) translateY(-2px);
+  }
+
+  .event-card.green  { background: var(--green);  margin-bottom: 6px; }
+  .event-card.purple { background: var(--purple); margin-bottom: 6px; }
+  .event-card.blue   { background: var(--blue); }
+
+  /* decorative big star in corner */
+  .event-card .deco-star {
+    position: absolute;
+    top: -30px; right: -30px;
+    opacity: 0.12;
+  }
+
+  .event-info {}
+
+  .event-acronym {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+    margin-bottom: 6px;
+  }
+
+  .event-card.purple .event-acronym,
+  .event-card.blue   .event-acronym {
+    color: rgba(255,255,255,0.55);
+  }
+
+  .event-name {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--dark);
+    line-height: 1.05;
+    margin-bottom: 10px;
+  }
+
+  .event-card.purple .event-name,
+  .event-card.blue   .event-name {
+    color: var(--white);
+  }
+
+  .event-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 10.5px;
+    color: rgba(0,0,0,0.5);
+    line-height: 1.65;
+    max-width: 340px;
+  }
+
+  .event-card.purple .event-desc,
+  .event-card.blue   .event-desc {
+    color: rgba(255,255,255,0.6);
+  }
+
+  .event-date-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .event-day {
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    color: rgba(0,0,0,0.12);
+    letter-spacing: -3px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .event-card.purple .event-day,
+  .event-card.blue   .event-day {
+    color: rgba(255,255,255,0.15);
+  }
+
+  .event-month-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.3);
+  }
+
+  .event-card.purple .event-month-tag,
+  .event-card.blue   .event-month-tag {
+    color: rgba(255,255,255,0.35);
+  }
+
+  .event-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.45);
+    margin-bottom: 12px;
+    width: fit-content;
+  }
+
+  .event-card.purple .event-badge,
+  .event-card.blue   .event-badge {
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--dark);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .event-card.purple .badge-dot,
+  .event-card.blue   .badge-dot {
+    background: var(--white);
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* TBD card */
+  .event-day.tbd {
+    font-size: 28px;
+    letter-spacing: -1px;
+    font-weight: 700;
+    margin-top: 18px;
+  }
+
+  /* ══════════════════════════════
+     ABOUT STRIP
+  ══════════════════════════════ */
+  .about-strip {
+    margin: 6px 48px 0;
+    background: var(--dark);
+    border-radius: 18px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .about-strip::after {
+    content: '*';
+    position: absolute;
+    right: 24px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .about-text {
+    flex: 1;
+  }
+
+  .about-text h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .about-text p {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ══════════════════════════════
+     COLOR BAR
+  ══════════════════════════════ */
+  .color-bar {
+    display: flex;
+    height: 6px;
+    margin: 28px 48px 0;
+    border-radius: 100px;
+    overflow: hidden;
+    gap: 3px;
+  }
+
+  .color-bar span {
+    flex: 1;
+    border-radius: 100px;
+  }
+
+  /* ══════════════════════════════
+     FOOTER
+  ══════════════════════════════ */
+  footer {
+    padding: 28px 48px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-brand {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .footer-handle {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: rgba(0,0,0,0.35);
+    letter-spacing: 0.5px;
+  }
+
+  .footer-right {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.25);
+  }
+
+  /* ══════════════════════════════
+     STAR SVG helper
+  ══════════════════════════════ */
+  .star-8 {
+    /* 8-point asterisk/star shape */
+  }
+
+  /* Staggered card entrance */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .event-card {
+    animation: slideUp 0.5s ease both;
+  }
+  .event-card:nth-child(1) { animation-delay: 0.1s; }
+  .event-card:nth-child(2) { animation-delay: 0.22s; }
+  .event-card:nth-child(3) { animation-delay: 0.34s; }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <p class="hero-label">Win Code Competitive · UFCG · 2025</p>
+
+  <div class="hero-logo">
+    <!-- 8-point star SVG -->
+    <svg class="star" width="52" height="52" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 2
+               L56 37
+               L85 15
+               L63 44
+               L98 50
+               L63 56
+               L85 85
+               L56 63
+               L50 98
+               L44 63
+               L15 85
+               L37 56
+               L2 50
+               L37 44
+               L15 15
+               L44 37Z"
+            fill="#111111"/>
+    </svg>
+    <div class="logo-text">
+      <span class="logo-win"><strong>win</strong> code</span>
+      <span class="logo-comp">competitive</span>
+    </div>
+  </div>
+
+  <p class="hero-tagline">multiplicando espaços · oferecendo oportunidades · abrindo caminhos</p>
+  <span class="hero-handle">@wcc_ufcg</span>
+</header>
+
+<!-- ══ PRÓXIMOS EVENTOS ══ -->
+<p class="section-label">Aspectos @ Próximos Eventos</p>
+
+<div class="events-title-strip">
+  <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 2L56 37L85 15L63 44L98 50L63 56L85 85L56 63L50 98L44 63L15 85L37 56L2 50L37 44L15 15L44 37Z" fill="#3DC47E"/>
+  </svg>
+  <h2>Próximos Eventos</h2>
+</div>
+
+<div class="events-grid">
+
+  <!-- CARD 1 — MFP -->
+  <div class="event-card purple">
+    <!-- deco star -->
+    <svg class="deco-star" width="180" height="180" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 2L56 37L85 15L63 44L98 50L63 56L85 85L56 63L50 98L44 63L15 85L37 56L2 50L37 44L15 15L44 37Z"/>
+    </svg>
+
+    <div class="event-info">
+      <div class="event-badge">
+        <span class="badge-dot"></span>
+        em breve
+      </div>
+      <div class="event-acronym">MFP</div>
+      <div class="event-name">Maratona<br>Feminina de<br>Programação</div>
+      <div class="event-desc">
+        Competição exclusiva para mulheres.<br>
+        Code. Compete. Inspire.
+      </div>
+    </div>
+
+    <div class="event-date-block">
+      <div class="event-day">23</div>
+      <div class="event-month-tag">mai · 2025</div>
+    </div>
+  </div>
+
+  <!-- CARD 2 — SAC -->
+  <div class="event-card green">
+    <svg class="deco-star" width="180" height="180" viewBox="0 0 100 100" fill="black" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 2L56 37L85 15L63 44L98 50L63 56L85 85L56 63L50 98L44 63L15 85L37 56L2 50L37 44L15 15L44 37Z"/>
+    </svg>
+
+    <div class="event-info">
+      <div class="event-badge">
+        <span class="badge-dot"></span>
+        em breve
+      </div>
+      <div class="event-acronym">SAC</div>
+      <div class="event-name">Semana<br>Acadêmica de<br>Computação</div>
+      <div class="event-desc">
+        Palestras, workshops e muito networking.<br>
+        A maior semana da computação.
+      </div>
+    </div>
+
+    <div class="event-date-block">
+      <div class="event-day">25</div>
+      <div class="event-month-tag">mai · 2025</div>
+    </div>
+  </div>
+
+  <!-- CARD 3 — Maratona Mista -->
+  <div class="event-card blue">
+    <svg class="deco-star" width="180" height="180" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 2L56 37L85 15L63 44L98 50L63 56L85 85L56 63L50 98L44 63L15 85L37 56L2 50L37 44L15 15L44 37Z"/>
+    </svg>
+
+    <div class="event-info">
+      <div class="event-badge">
+        <span class="badge-dot"></span>
+        em breve
+      </div>
+      <div class="event-acronym">MMP</div>
+      <div class="event-name">Maratona Mista<br>de Programação</div>
+      <div class="event-desc">
+        Abertas as inscrições em breve.<br>
+        Todos são bem-vindos para competir.
+      </div>
+    </div>
+
+    <div class="event-date-block">
+      <div class="event-day tbd">junho<br>2025</div>
+      <div class="event-month-tag" style="margin-top:6px;">data a confirmar</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ ABOUT STRIP ══ -->
+<div class="about-strip">
+  <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+    <path d="M50 2L56 37L85 15L63 44L98 50L63 56L85 85L56 63L50 98L44 63L15 85L37 56L2 50L37 44L15 15L44 37Z" fill="#3DC47E"/>
+  </svg>
+  <div class="about-text">
+    <h3>O que é o WCC?</h3>
+    <p>
+      win code competitive é a iniciativa de programação competitiva da UFCG.<br>
+      Extrovertida, alegre e moderna — multiplicando espaços desde o primeiro commit.
+    </p>
+  </div>
+</div>
+
+<!-- ══ COLOR BAR ══ -->
+<div class="color-bar">
+  <span style="background:var(--green)"></span>
+  <span style="background:var(--purple)"></span>
+  <span style="background:var(--blue)"></span>
+  <span style="background:#e8d9c4"></span>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-left">
+    <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 2L56 37L85 15L63 44L98 50L63 56L85 85L56 63L50 98L44 63L15 85L37 56L2 50L37 44L15 15L44 37Z" fill="#111"/>
+    </svg>
+    <div>
+      <div class="footer-brand">win code competitive</div>
+      <div class="footer-handle">@wcc_ufcg</div>
+    </div>
+  </div>
+  <div class="footer-right">UFCG · 2025</div>
+</footer>
+
+</body>
+</html>
