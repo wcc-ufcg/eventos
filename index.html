@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WCC — Win Code Competitive</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
@@ -25,106 +26,116 @@ body{
   margin:auto;
 }
 
-/* BOTÃO CALENDÁRIO */
+/* CARD CLICÁVEL */
+.event-link{
+  text-decoration:none;
+  color:inherit;
+  display:block;
+}
+
+.event-card{
+  border-radius:18px;
+  padding:28px;
+  margin:12px 48px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  transition:.2s;
+  cursor:pointer;
+}
+
+.event-card:hover{
+  transform:scale(1.02);
+}
+
+.purple{background:var(--purple);color:#fff}
+.green{background:var(--green)}
+.blue{background:var(--blue);color:#fff}
+
+.event-name{
+  font-size:26px;
+  font-weight:800;
+}
+
+.event-day{
+  font-size:48px;
+  font-weight:900;
+}
+
+/* BOTÃO */
 .calendar-btn{
   margin-top:12px;
-  display:inline-block;
   font-family:'Space Mono';
   font-size:10px;
   padding:6px 12px;
   border-radius:100px;
+  border:none;
   background:rgba(0,0,0,0.15);
-  text-decoration:none;
-  color:inherit;
-  transition:.2s;
+  cursor:pointer;
 }
-.calendar-btn:hover{
-  transform:scale(1.05);
-}
+
 .event-card.purple .calendar-btn,
 .event-card.blue .calendar-btn{
   background:rgba(255,255,255,0.2);
+  color:#fff;
 }
-
-/* (resto do seu CSS mantido igual, resumido pra foco) */
-.hero{background:var(--green);padding:48px}
-.events-grid{padding:48px}
-.event-card{
-  border-radius:18px;
-  padding:28px;
-  margin-bottom:12px;
-}
-.purple{background:var(--purple);color:#fff}
-.green{background:var(--green)}
-.blue{background:var(--blue);color:#fff}
-.event-name{font-size:26px;font-weight:800}
-.event-day{font-size:48px;font-weight:900}
 </style>
 </head>
 
 <body>
 
-<header class="hero">
+<header style="padding:48px;background:#3DC47E">
   <h1>win code competitive</h1>
 </header>
 
-<div class="events-grid">
-
 <!-- EVENTO 1 -->
-<div class="event-card purple">
+<a class="event-link event-card purple"
+href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Maratona+Feminina+de+Programação&dates=20260523T120000Z/20260523T180000Z&details=Evento+WCC"
+target="_blank">
+
   <div>
     <div class="event-name">Maratona Feminina de Programação</div>
     <p>Competição exclusiva para mulheres.</p>
 
-    <!-- BOTÕES -->
-    <a class="calendar-btn" target="_blank"
-    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Maratona+Feminina+de+Programação&dates=20260523T120000Z/20260523T180000Z&details=Evento+WCC">
-      📅 Google Calendar
-    </a>
-
-    <a class="calendar-btn" href="./mfp.ics" download>
-      ⬇️ .ics
-    </a>
-
+    <button class="calendar-btn"
+      onclick="window.open('./mfp.ics','_blank'); event.stopPropagation();">
+      ⬇️ baixar .ics
+    </button>
   </div>
+
   <div class="event-day">23 MAI</div>
-</div>
+</a>
 
 <!-- EVENTO 2 -->
-<div class="event-card green">
+<a class="event-link event-card green"
+href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Semana+Acadêmica+de+Computação&dates=20260525T120000Z/20260525T180000Z&details=Evento+WCC"
+target="_blank">
+
   <div>
     <div class="event-name">Semana Acadêmica de Computação</div>
     <p>Palestras e workshops.</p>
 
-    <a class="calendar-btn" target="_blank"
-    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Semana+Acadêmica+de+Computação&dates=20260525T120000Z/20260525T180000Z&details=Evento+WCC">
-      📅 Google Calendar
-    </a>
-
-    <a class="calendar-btn" href="./sac.ics" download>
-      ⬇️ .ics
-    </a>
-
+    <button class="calendar-btn"
+      onclick="window.open('./sac.ics','_blank'); event.stopPropagation();">
+      ⬇️ baixar .ics
+    </button>
   </div>
+
   <div class="event-day">25 MAI</div>
-</div>
+</a>
 
 <!-- EVENTO 3 -->
-<div class="event-card blue">
+<a class="event-link event-card blue"
+href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Maratona+Mista+de+Programação&details=Evento+WCC"
+target="_blank">
+
   <div>
     <div class="event-name">Maratona Mista de Programação</div>
     <p>Data a confirmar.</p>
-
-    <a class="calendar-btn" target="_blank"
-    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Maratona+Mista+de+Programação&details=Evento+WCC">
-      📅 Google Calendar
-    </a>
-
   </div>
-  <div class="event-day">JUN</div>
-</div>
 
-</div>
+  <div class="event-day">JUN</div>
+</a>
 
 </body>
 </html>
